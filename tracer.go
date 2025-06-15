@@ -26,7 +26,7 @@ func SetupTracer(ctx context.Context, serviceName string, otlpTracesURL string) 
 	}
 
 	resource, err := resource.New(
-		context.Background(),
+		ctx,
 		resource.WithSchemaURL(semconv.SchemaURL),
 		resource.WithAttributes(semconv.ServiceNameKey.String(serviceName)),
 	)
