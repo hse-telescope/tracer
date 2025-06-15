@@ -3,7 +3,6 @@ package tracer
 import (
 	"net/http"
 
-	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/propagation"
 	"go.opentelemetry.io/otel/trace"
@@ -21,8 +20,8 @@ func AddTracingMiddleware(handler http.Handler) http.Handler {
 				Value: attribute.StringValue(r.URL.Path),
 			}))
 			defer span.End()
+
 			r = r.WithContext(ctx)
-			handler = otelhttp.NewHandler(handler, "smth")
 			handler.ServeHTTP(w, r)
 		},
 	)
