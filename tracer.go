@@ -39,8 +39,6 @@ func SetupTracer(ctx context.Context, serviceName string, otlpTracesURL string) 
 		sdk.WithResource(resource),
 	)
 
-	otel.SetTracerProvider(tracerProvider)
-
 	tracer = tracerProvider.Tracer(serviceName)
 
 	return nil
