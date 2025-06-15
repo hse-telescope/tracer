@@ -10,12 +10,13 @@ import (
 func AddTracingMiddleware(handler http.Handler) http.Handler {
 	return http.HandlerFunc(
 		func(w http.ResponseWriter, r *http.Request) {
-			span := trace.SpanFromContext(r.Context())
+			ctx, span := tracer.Start(r.Context(), r.URL.Path)
 			span.AddEvent("got request", trace.WithAttributes(attribute.KeyValue{
 				Key:   attribute.Key("url"),
 				Value: attribute.StringValue(r.URL.Path),
 			}))
 			defer span.End()
+			r = r.WithContext(ctx)
 			handler.ServeHTTP(w, r)
 		},
 	)

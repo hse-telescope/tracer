@@ -53,7 +53,3 @@ func ShutdownTracer(ctx context.Context) error {
 func Start(ctx context.Context, message string, opts ...trace.SpanStartOption) (context.Context, trace.Span) {
 	return tracer.Start(ctx, message, opts...)
 }
-
-func SpanFromContext(ctx context.Context) trace.Span {
-	return trace.SpanFromContext(ctx)
-}
